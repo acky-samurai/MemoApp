@@ -1,9 +1,15 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
+// Helloのコンポーネントを読み込む
+import Hello from './src/compornents/Hello'
 
 const App = (): JSX.Element => {
   return (
     <View style={styles.container}>
+      {/* JavaScriptのオブジェクトやture,falseを渡すときは中括弧で囲う */}
+      <Hello bang>World</Hello>
+      {/* 見た目をカスタマイズ↓ */}
+      <Hello style={{ fontSize: 16 }}>World</Hello>
       <Text>Open up App.tsx to start working on your app!!!</Text>
       <StatusBar style="auto" />
     </View>
