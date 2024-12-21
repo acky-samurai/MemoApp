@@ -13,30 +13,30 @@ const Index = (): JSX.Element => {
             {/* MemoList */}
             <View>
                 {/* memoItem */}
-                <View>
+                <View style={styles.memoListItem} >
                     <View>
-                        <Text>買い物リスト</Text>
-                        <Text>2024年12月17日 08:15</Text>
+                        <Text style={styles.memoListItemTitle}>買い物リスト</Text>
+                        <Text style={styles.memoListItemDate}>2024年12月17日 08:15</Text>
                     </View>
                     <View>
                         <Text>X</Text>
                     </View>
                 </View>
 
-                <View>
+                <View style={styles.memoListItem} >
                     <View>
-                        <Text>買い物リスト</Text>
-                        <Text>2024年12月17日 08:15</Text>
+                        <Text style={styles.memoListItemTitle}>買い物リスト</Text>
+                        <Text style={styles.memoListItemDate}>2024年12月17日 08:15</Text>
                     </View>
                     <View>
                         <Text>X</Text>
                     </View>
                 </View>
 
-                <View>
+                <View style={styles.memoListItem} >
                     <View>
-                        <Text>買い物リスト</Text>
-                        <Text>2024年12月17日 08:15</Text>
+                        <Text style={styles.memoListItemTitle}>買い物リスト</Text>
+                        <Text style={styles.memoListItemDate}>2024年12月17日 08:15</Text>
                     </View>
                     <View>
                         <Text>X</Text>
@@ -54,19 +54,19 @@ const Index = (): JSX.Element => {
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         // containerに対して画面全体を覆う,画面いっぱいに要素を広げる,containerという要素が設定された箇所全体に適応される.
         flex: 1,
         backgroundColor: '#ffffff'
     },
-    header:{
+    header: {
         backgroundColor: '#467FD3',
         height: 104,
         justifyContent: 'flex-end'
     },
     headerInner: {
         // 横方向の制御.
-        alignItems:'center'
+        alignItems: 'center'
     },
     headerRight: {
         // 絶対位置を指定する(absolute),flexボックスのコントロールから外れて好きな位置に要素を配置できる.
@@ -83,6 +83,31 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         fontWeight: 'bold',
         color: '#ffffff'
+    },
+    memoListItem: {
+        backgroundColor: '#ffffff',
+        // 子要素を横方向に並べる.
+        flexDirection: 'row',
+        // 間に空白を入れ、横一杯に表示する.
+        justifyContent: 'space-between',
+        // 内側に余白を設ける.
+        paddingVertical: 16,
+        paddingHorizontal: 19,
+        // alignItemsは横方向の位置を調整するものだが、flexDirectionで方向が入れ替わっているため、縦方向の位置を中央に移動.
+        alignItems: 'center',
+        // Borderの太さを1に設定.
+        borderBottomWidth: 1,
+        borderColor: 'rgba(0,0,0,0.15)'
+
+    },
+    memoListItemTitle: {
+        fontSize: 16,
+        lineHeight: 32
+    },
+    memoListItemDate: {
+        fontSize: 12,
+        lineHeight: 16,
+        color: '#848484'
     }
 })
 
