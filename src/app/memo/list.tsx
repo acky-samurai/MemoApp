@@ -1,8 +1,10 @@
 import { View, StyleSheet } from 'react-native'
+
 // "../"は一段階フォルダを上がることを意味する.
 import Header from '../../compornents/header'
 import MemoListItem from '../../compornents/MemoListItem'
 import CircleButton from '../../compornents/CircleButton'
+import Icon from '../../compornents/icon'
 
 const List = (): JSX.Element => {
     return (
@@ -17,7 +19,9 @@ const List = (): JSX.Element => {
                 <MemoListItem />
             </View>
             {/* button */}
-            <CircleButton>+</CircleButton>
+            <CircleButton>
+                <Icon name='plus' size={40} color='#ffffff' />
+            </CircleButton>
         </View>
     )
 }
