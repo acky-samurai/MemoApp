@@ -1,16 +1,19 @@
 // 共通で利用される部品はコンポーネントに切り出すと便利.
-import { View, Text, StyleSheet } from 'react-native'
+// TouchableOpacityは、設定したボタンをタッチした時に反応するようにする設定.
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 interface Props {
     label: string
+    // voidはなにも返さないことを意味する.
+    onPress? : () => void
 }
 
 const Button = (props: Props): JSX.Element => {
-    const { label } = props
+    const { label, onPress } = props
     return (
-        <View style={styles.button}>
+        <TouchableOpacity onPress={onPress} style={styles.button}>
             <Text style={styles.buttonLabel}>{label}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 
