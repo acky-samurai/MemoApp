@@ -1,20 +1,21 @@
-import { 
-    Text, StyleSheet, TouchableOpacity, 
+import {
+    Text, StyleSheet, TouchableOpacity,
     type ViewStyle
- } from 'react-native'
+} from 'react-native'
 
 interface Props {
     children: JSX.Element
     style?: ViewStyle
+    onPress?: () => void
 }
 
 const CircleButton = (props: Props): JSX.Element => {
-    const { children, style }  = props
-    return(
+    const { children, style, onPress } = props
+    return (
         // 配列にすることで、一番右のstyleが優先される.
-        <TouchableOpacity style={[styles.circleButton, style]}>
-        <Text style={styles.circleButtonLabel}>{children}</Text>
-    </TouchableOpacity>
+        <TouchableOpacity onPress={onPress} style={[styles.circleButton, style]}>
+            <Text style={styles.circleButtonLabel}>{children}</Text>
+        </TouchableOpacity>
     )
 }
 

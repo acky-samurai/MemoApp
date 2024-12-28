@@ -1,10 +1,15 @@
 import { View, StyleSheet } from 'react-native'
+import { router } from 'expo-router'
 
 // "../"は一段階フォルダを上がることを意味する.
 import Header from '../../compornents/header'
 import MemoListItem from '../../compornents/MemoListItem'
 import CircleButton from '../../compornents/CircleButton'
 import Icon from '../../compornents/icon'
+
+const handlePress = (): void => {
+router.push('/memo/create')
+}
 
 const List = (): JSX.Element => {
     return (
@@ -19,7 +24,7 @@ const List = (): JSX.Element => {
                 <MemoListItem />
             </View>
             {/* button */}
-            <CircleButton>
+            <CircleButton onPress={handlePress} >
                 <Icon name='plus' size={40} color='#ffffff' />
             </CircleButton>
         </View>

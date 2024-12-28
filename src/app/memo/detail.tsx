@@ -1,11 +1,15 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { router } from 'expo-router'
+
 // vector iconsからフェザーライブラリを読み込む.
 // import { Feather } from '@expo/vector-icons'
 import Icon from '../../compornents/icon'
-
-
 import Header from '../../compornents/header'
 import CircleButton from '../../compornents/CircleButton'
+
+const handlePress = (): void => {
+router.push('/memo/edit')
+}
 
 const Detail = (): JSX.Element => {
     return (
@@ -25,7 +29,7 @@ const Detail = (): JSX.Element => {
             </ScrollView>
             {/* Button */}
             {/* スタイルとして、top: 160, bottom: 'auto'を受け渡し、indexの設定を上書きする. */}
-            <CircleButton style={{ top: 160, bottom: 'auto' }}>
+            <CircleButton onPress={handlePress} style={{ top: 160, bottom: 'auto' }}>
                 <Icon name='pencil' size={40} color='#ffffff' />
                 {/* Featherからチェックマークをフォントサイズ40で受け取る. */}
                 {/* <Feather name='check' size={40}/> */}

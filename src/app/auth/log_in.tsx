@@ -2,10 +2,16 @@ import {
     View, Text, TextInput,
     TouchableOpacity, StyleSheet
 } from 'react-native'
+import { Link, router } from 'expo-router'
 
 import Header from '../../compornents/header'
 import Button from '../../compornents/Button'
 
+// voidは関数に対して何も返さないことを意味する.
+const handlePress = (): void => {
+// ログイン
+router.push('/memo/list')
+}
 
 const LogIn = (): JSX.Element => {
     return (
@@ -15,12 +21,16 @@ const LogIn = (): JSX.Element => {
                 <Text style={styles.title}>Log In</Text>
                 <TextInput style={styles.input} value='Email Adress' />
                 <TextInput style={styles.input} value='Password' />
-                <Button label='Submit' />
+                <Button label='Submit' onPress={handlePress} />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registered?</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.footerLink}>Sign up here!</Text>
-                    </TouchableOpacity>
+                    {/* Linkにはプロパティが必要であるため、hrefをセットする. */}
+                    {/* asChildは他の要素を入れ子にする時に利用する. */}
+                    <Link href='/auth/sign_up' asChild>
+                        <TouchableOpacity>
+                            <Text style={styles.footerLink}>Sign up here!</Text>
+                        </TouchableOpacity>
+                    </Link>
                 </View>
             </View>
         </View>
