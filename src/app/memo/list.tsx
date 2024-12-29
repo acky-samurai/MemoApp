@@ -1,8 +1,7 @@
-import { View, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
+import { Text, View, StyleSheet } from 'react-native'
+import { router, useNavigation } from 'expo-router'
 
 // "../"は一段階フォルダを上がることを意味する.
-import Header from '../../compornents/header'
 import MemoListItem from '../../compornents/MemoListItem'
 import CircleButton from '../../compornents/CircleButton'
 import Icon from '../../compornents/icon'
@@ -12,10 +11,12 @@ router.push('/memo/create')
 }
 
 const List = (): JSX.Element => {
+    const navigation = useNavigation()
+    navigation.setOptions({
+        headerRight: () => { return <Text>Test</Text>}
+    })
     return (
         <View style={styles.container}>
-            {/* Header */}
-            <Header />
             {/* MemoList */}
             <View>
                 {/* memoItem */}

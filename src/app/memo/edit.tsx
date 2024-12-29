@@ -3,7 +3,6 @@ import {
  } from 'react-native'
  import { router } from 'expo-router'
 
-import Header from '../../compornents/header'
 import CircleButton from '../../compornents/CircleButton'
 import Icon from '../../compornents/icon'
 
@@ -16,7 +15,6 @@ const Edit = (): JSX.Element => {
     return (
         // ReactNativeの公式サイトからKeyboardAvoidingViewにbehaviorを設定することを推奨されているため設定.
         <KeyboardAvoidingView behavior='height' style={styles.container}>
-            <Header />
             <View style={styles.inputCOntainer}>
                 {/* multilineを入れることで、複数行のテキストと認識し、iosでもtextAlignVerticalが適用される. */}
                 {/* 改行を有効にするには中括弧でvalueを設定する. */}

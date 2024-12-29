@@ -4,19 +4,18 @@ import {
 } from 'react-native'
 import { Link, router } from 'expo-router'
 
-import Header from '../../compornents/header'
 import Button from '../../compornents/Button'
 
 // voidは関数に対して何も返さないことを意味する.
 const handlePress = (): void => {
 // ログイン
-router.push('/memo/list')
+// pushはStackに追加するが、Raplaceは置き換える.
+router.replace('/memo/list')
 }
 
 const LogIn = (): JSX.Element => {
     return (
         <View style={styles.container}>
-            <Header />
             <View style={styles.inner}>
                 <Text style={styles.title}>Log In</Text>
                 <TextInput style={styles.input} value='Email Adress' />
