@@ -3,23 +3,47 @@ import {
     TouchableOpacity, StyleSheet
 } from 'react-native'
 import { Link, router } from 'expo-router'
+import { useState } from 'react'
 
 import Button from '../../compornents/Button'
 
 // voidは関数に対して何も返さないことを意味する.
 const handlePress = (): void => {
-// ログイン
-// pushはStackに追加するが、Raplaceは置き換える.
-router.replace('/memo/list')
+    // ログイン
+    // pushはStackに追加するが、Raplaceは置き換える.
+    router.replace('/memo/list')
 }
 
 const LogIn = (): JSX.Element => {
+    // email:値を保持する場所,setEmail:値を更新する関数.
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     return (
         <View style={styles.container}>
             <View style={styles.inner}>
                 <Text style={styles.title}>Log In</Text>
-                <TextInput style={styles.input} value='Email Adress' />
-                <TextInput style={styles.input} value='Password' />
+                <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={(text) => { setEmail(text) }}
+                    // 頭文字が勝手に大文字になるのを制御する.
+                    autoCapitalize='none'
+                    // キーボードにアットマークを表示させる.
+                    keyboardType='email-address'
+                    // テキストインプットになにもないとき、表示するテキストを設定する.
+                    placeholder='Email Address'
+                    textContentType='emailAddress'
+                />
+                <TextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={(text) => { setPassword(text) }}
+                    autoCapitalize='none'
+                    // passwordを伏字にする.
+                    secureTextEntry
+                    placeholder='Password'
+                    textContentType='password'
+                />
                 <Button label='Submit' onPress={handlePress} />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registered?</Text>

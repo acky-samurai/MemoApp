@@ -1,5 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { Link, router } from 'expo-router'
+import { useState } from 'react'
 
 import Button from '../../compornents/Button'
 
@@ -9,13 +10,34 @@ router.push('/memo/list')
 }
 
 const SignUp = (): JSX.Element => {
+        const [email, setEmail] = useState('')
+        const [password, setPassword] = useState('')
     return (
         <View style={styles.container}>
             <View style={styles.inner}>
                 <Text style={styles.title}>Sign Up</Text>
-                <TextInput style={styles.input} value='Email Adress' />
-                <TextInput style={styles.input} value='Password' />
-                <Button label='Submit' onPress={handlePress} />
+                <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={(text) => { setEmail(text) }}
+                    // 頭文字が勝手に大文字になるのを制御する.
+                    autoCapitalize='none'
+                    // キーボードにアットマークを表示させる.
+                    keyboardType='email-address'
+                    // テキストインプットになにもないとき、表示するテキストを設定する.
+                    placeholder='Email Address'
+                    textContentType='emailAddress'
+                />
+                <TextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={(text) => { setPassword(text) }}
+                    autoCapitalize='none'
+                    // passwordを伏字にする.
+                    secureTextEntry
+                    placeholder='Password'
+                    textContentType='password'
+                />                <Button label='Submit' onPress={handlePress} />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Already registered?</Text>
                     <Link href='/auth/log_in' asChild>

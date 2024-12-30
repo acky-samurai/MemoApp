@@ -1,20 +1,30 @@
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+// use〇〇というのは、React Hooksであることを意味する.
+// react hooks は、Reactの色々なコンポーネントに機能を与えるもの.
 import { router, useNavigation } from 'expo-router'
+import { useEffect } from 'react'
 
 // "../"は一段階フォルダを上がることを意味する.
 import MemoListItem from '../../compornents/MemoListItem'
 import CircleButton from '../../compornents/CircleButton'
 import Icon from '../../compornents/icon'
+import LogOutButton from '../../compornents/LogOutButton'
 
 const handlePress = (): void => {
-router.push('/memo/create')
+    router.push('/memo/create')
 }
 
 const List = (): JSX.Element => {
+    // 配列に何も指定されていないため、画面が表示されたときに一度だけ表示される.
+    // 一つ目の引数にはAllowFunction、二つ目の引数には配列を設定する.
     const navigation = useNavigation()
-    navigation.setOptions({
-        headerRight: () => { return <Text>Test</Text>}
-    })
+    // indexページとは関係のないところに、影響を与えるためにはuseEffectを利用する.
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => { return <LogOutButton /> }
+        })
+    }, [])
+
     return (
         <View style={styles.container}>
             {/* MemoList */}
