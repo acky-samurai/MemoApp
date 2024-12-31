@@ -1,17 +1,31 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native'
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
+import { auth } from '../../config'
 import Button from '../../compornents/Button'
 
-const handlePress = (): void => {
-// 会員登録
-router.push('/memo/list')
+// 関数の引数として、emailとpasswordを受け取る.
+const handlePress = (email: string, password: string): void => {
+    // 会員登録
+    console.log(email, password)
+    // 成功した時はthen,失敗した時はcatchを実行する.
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log(userCredential.user.uid)
+            router.replace('/memo/list')
+        })
+        .catch((error) => {
+            const { code, message } = error
+            console.log(code, message)
+            Alert.alert(message)
+        })
 }
 
 const SignUp = (): JSX.Element => {
-        const [email, setEmail] = useState('')
-        const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     return (
         <View style={styles.container}>
             <View style={styles.inner}>
@@ -37,7 +51,9 @@ const SignUp = (): JSX.Element => {
                     secureTextEntry
                     placeholder='Password'
                     textContentType='password'
-                />                <Button label='Submit' onPress={handlePress} />
+                />
+                {/* onPressには単に関数が渡り、関数の中でhandlePressを実行する. */}
+                <Button label='Submit' onPress={() => { handlePress(email, password) }} />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Already registered?</Text>
                     <Link href='/auth/log_in' asChild>
