@@ -7,12 +7,13 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: 'AIzaSyCpfS8b-YLhVMRm8jb5buYOw6oPxHrF7NI',
-    authDomain: 'memoapp-71412.firebaseapp.com',
-    projectId: 'memoapp-71412',
-    storageBucket: 'memoapp-71412.firebasestorage.app',
-    messagingSenderId: '786876439465',
-    appId: '1:786876439465:web:5684975e23321e792a02b8'
+    // "process.env."で環境情報をenvファイルから取得する.
+    apiKey: process.env.EXPO_PUBLIC_FB_API_KEY,
+    authDomain: process.env.EXPO_PUBLIC_FB_AUTH_DOMAIN,
+    projectId: process.env.EXPO_PUBLIC_FB_PROJECT_ID,
+    storageBucket: process.env.EXPO_PUBLIC_FB_STORAGE_BUCKET,
+    messagingSenderId: process.env.EXPO_PUBLIC_FB_MESSAGING_SENDER_ID,
+    appId: process.env.EXPO_PUBLIC_FB_APP_ID
   }
 
 //   firebaseの初期化を行う.
