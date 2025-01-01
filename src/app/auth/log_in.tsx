@@ -1,17 +1,29 @@
 import {
-    View, Text, TextInput,
+    View, Text, TextInput, Alert,
     TouchableOpacity, StyleSheet
 } from 'react-native'
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 import Button from '../../compornents/Button'
+import { auth } from '../../config'
 
 // voidは関数に対して何も返さないことを意味する.
-const handlePress = (): void => {
+const handlePress = (email: string, password: string): void => {
     // ログイン
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log(userCredential.user.uid)
+            router.replace('/memo/list')
+
+        })
+        .catch((error) => {
+            const { code, message } = error
+            console.log(code, message)
+            Alert.alert(message)
+        })
     // pushはStackに追加するが、Raplaceは置き換える.
-    router.replace('/memo/list')
 }
 
 const LogIn = (): JSX.Element => {
@@ -44,12 +56,12 @@ const LogIn = (): JSX.Element => {
                     placeholder='Password'
                     textContentType='password'
                 />
-                <Button label='Submit' onPress={handlePress} />
+                <Button label='Submit' onPress={() => { handlePress(email, password) }} />
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not registered?</Text>
                     {/* Linkにはプロパティが必要であるため、hrefをセットする. */}
                     {/* asChildは他の要素を入れ子にする時に利用する. */}
-                    <Link href='/auth/sign_up' asChild>
+                    <Link href='/auth/sign_up' asChild replace>
                         <TouchableOpacity>
                             <Text style={styles.footerLink}>Sign up here!</Text>
                         </TouchableOpacity>
