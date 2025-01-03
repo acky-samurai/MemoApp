@@ -9,13 +9,13 @@ import { auth } from '../config'
 const Index = (): JSX.Element => {
     // useEffectが実行されたとき、一度だけ実行する為に空の配列を用意する.
     useEffect(() => {
-onAuthStateChanged(auth, (user) => {
-    if(user !== null) {
-        router.replace('/memo/list')
-    }
-})
+        onAuthStateChanged(auth, (user) => {
+            if (user !== null) {
+                router.replace('/memo/list')
+            }
+        })
     }, [])
-    return <Redirect href= 'auth/log_in' />
+    return <Redirect href='auth/log_in' />
 }
 
 export default Index

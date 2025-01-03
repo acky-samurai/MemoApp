@@ -1,5 +1,5 @@
 import {
-    Text, TouchableOpacity, StyleSheet, Alert
+    Text, TouchableOpacity, Alert, StyleSheet
 } from 'react-native'
 import { signOut } from 'firebase/auth'
 
