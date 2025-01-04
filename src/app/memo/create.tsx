@@ -1,10 +1,11 @@
 import {
-    View, TextInput, StyleSheet, KeyboardAvoidingView
+    View, TextInput, StyleSheet
 } from 'react-native'
 import { router } from 'expo-router'
 import { collection, addDoc, Timestamp } from 'firebase/firestore'
 import { useState } from 'react'
 
+import KeyboardAvoidingView from '../../compornents/KeyboardAvoidingView'
 import CircleButton from '../../compornents/CircleButton'
 import Icon from '../../compornents/icon'
 import { db, auth } from '../../config'
@@ -51,7 +52,7 @@ const Create = (): JSX.Element => {
     const [bodyText, setBodyText] = useState('')
     return (
         // ReactNativeの公式サイトからKeyboardAvoidingViewにbehaviorを設定することを推奨されているため設定.
-        <KeyboardAvoidingView behavior='height' style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
             <View style={styles.inputCOntainer}>
                 {/* multilineを入れることで、複数行のテキストと認識し、iosでもtextAlignVerticalが適用される. */}
                 {/* 改行を有効にするには中括弧でvalueを設定する. */}
@@ -60,6 +61,8 @@ const Create = (): JSX.Element => {
                 style={styles.input} 
                 value={bodyText} 
                 onChangeText={(text) => { setBodyText(text) }}
+                // 新規メモ画面を開いたとき、カーソルが当たるようになる設定.
+                autoFocus
                 />
             </View>
             <CircleButton onPress={() => { handlePress(bodyText) }} >
