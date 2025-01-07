@@ -3,12 +3,15 @@ import { View, StyleSheet } from 'react-native'
 // react hooks は、Reactの色々なコンポーネントに機能を与えるもの.
 import { router, useNavigation } from 'expo-router'
 import { useEffect } from 'react'
+// dataを取得するためのもの.
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
 
 // "../"は一段階フォルダを上がることを意味する.
 import MemoListItem from '../../compornents/MemoListItem'
 import CircleButton from '../../compornents/CircleButton'
 import Icon from '../../compornents/icon'
 import LogOutButton from '../../compornents/LogOutButton'
+import { db, auth } from '../../config'
 
 const handlePress = (): void => {
     router.push('/memo/create')
@@ -24,6 +27,21 @@ const List = (): JSX.Element => {
             headerRight: () => { return <LogOutButton /> }
         })
     }, [])
+    // 作業の内容によってuseEffectを使い分ける.
+    useEffect(() => {
+        if (auth.currentUser == null) { return }
+        const ref = collection(db, `users/${auth.currentUser.uid}/memos`)
+        // queryはどういうデータが欲しいのかを表現する.
+        // ascendant,desendantで、昇順降順を選ぶ.
+        const q = query(ref, orderBy('updatedAt', 'desc'))
+        // memoを監視する.snapshotの中に我々のメモデータが入っている.
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            snapshot.forEach((doc) => {
+                console.log('memo', doc.data())
+            })
+        })
+        return unsubscribe
+    },[])
 
     return (
         <View style={styles.container}>
