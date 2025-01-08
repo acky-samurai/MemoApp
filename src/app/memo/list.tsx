@@ -61,9 +61,8 @@ const List = (): JSX.Element => {
             {/* MemoList */}
             <View>
                 {/* memoItem */}
-                <MemoListItem />
-                <MemoListItem />
-                <MemoListItem />
+                {/* 値を返すだけの時,{}とreturnを省略できる。 */}
+{memos.map((memo) =>  <MemoListItem memo={memo} />)}
             </View>
             {/* button */}
             <CircleButton onPress={handlePress} >
