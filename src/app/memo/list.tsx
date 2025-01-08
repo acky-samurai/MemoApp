@@ -2,7 +2,8 @@ import { View, StyleSheet } from 'react-native'
 // use〇〇というのは、React Hooksであることを意味する.
 // react hooks は、Reactの色々なコンポーネントに機能を与えるもの.
 import { router, useNavigation } from 'expo-router'
-import { useEffect } from 'react'
+// useStateは値を保持するためのもの.
+import { useEffect, useState } from 'react'
 // dataを取得するためのもの.
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
 
@@ -12,12 +13,15 @@ import CircleButton from '../../compornents/CircleButton'
 import Icon from '../../compornents/icon'
 import LogOutButton from '../../compornents/LogOutButton'
 import { db, auth } from '../../config'
+import { type Memo } from '../../../types/memo'
 
 const handlePress = (): void => {
     router.push('/memo/create')
 }
 
 const List = (): JSX.Element => {
+    // 空の配列を初期値に設定している.<Memo[]>はTypeScriptの書き方.
+    const [memos, setMemos] = useState<Memo[]>([])
     // 配列に何も指定されていないため、画面が表示されたときに一度だけ表示される.
     // 一つ目の引数にはAllowFunction、二つ目の引数には配列を設定する.
     const navigation = useNavigation()
@@ -36,9 +40,18 @@ const List = (): JSX.Element => {
         const q = query(ref, orderBy('updatedAt', 'desc'))
         // memoを監視する.snapshotの中に我々のメモデータが入っている.
         const unsubscribe = onSnapshot(q, (snapshot) => {
+            const remoteMemos: Memo[] = []
             snapshot.forEach((doc) => {
                 console.log('memo', doc.data())
+                const { bodyText, updatedAt } = doc.data()
+                remoteMemos.push({
+                    id: doc.id,
+                    // 変数の名前が同じ場合は省略できる。bodyText: bodyText,updatedAt: updatedAt.
+                    bodyText,
+                    updatedAt
+                })
             })
+            setMemos(remoteMemos)
         })
         return unsubscribe
     },[])
