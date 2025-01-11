@@ -1,13 +1,18 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
+import { onSnapshot, doc } from 'firebase/firestore'
+import { useState, useEffect } from 'react'
 
 // vector iconsからフェザーライブラリを読み込む.
 // import { Feather } from '@expo/vector-icons'
 import Icon from '../../compornents/icon'
 import CircleButton from '../../compornents/CircleButton'
+// firestoreを読み込むときにいつも読み込んでいるもの.
+import { auth, db } from '../../config'
+import { type Memo } from '../../../types/memo'
 
 const handlePress = (): void => {
-router.push('/memo/edit')
+    router.push('/memo/edit')
 }
 
 const Detail = (): JSX.Element => {
@@ -16,18 +21,31 @@ const Detail = (): JSX.Element => {
     // paramsにidが入っている.
     // console.log(params)
     console.log(id)
+    // 初期値はnull.<>で型を定義.
+    const [memo, setMemo] = useState<Memo | null>(null)
+    useEffect(() => {
+        if (auth.currentUser === null) { return }
+        const ref = doc(db, `users/${auth.currentUser.uid}/memos`, String(id))
+        const unsubscribe = onSnapshot(ref, (memoDoc) => {
+            const { bodyText, updatedAt } = memoDoc.data() as Memo
+            setMemo({
+                id: memoDoc.id,
+                bodyText,
+                updatedAt
+            })
+        })
+        return unsubscribe
+    }, [])
     return (
         <View style={styles.container}>
             <View style={styles.memoHeader}>
-                <Text style={styles.memoTitle}>買い物リスト</Text>
-                <Text style={styles.memoDate}>2024年12月24日 22:35</Text>
+                <Text style={styles.memoTitle} numberOfLines={1}>{memo?.bodyText}</Text>
+                <Text style={styles.memoDate}>{memo?.updatedAt?.toDate().toLocaleString('ja-JP')}</Text>
             </View>
             {/* memoの本文 */}
             <ScrollView style={styles.memoBody}>
                 <Text style={styles.memoBodyText}>
-                    買い物リスト
-                    書体やレイアウトなどを確認するために用います。
-                    本文用なので使い方を間違えると不自然に見えることもありますので要注意。
+                    {memo?.bodyText}
                 </Text>
             </ScrollView>
             {/* Button */}
@@ -70,10 +88,10 @@ const styles = StyleSheet.create({
     },
     memoBody: {
         // 余白の設定.
-        paddingVertical: 32,
         paddingHorizontal: 27
     },
     memoBodyText: {
+        paddingVertical: 32,
         color: '#000000',
         fontSize: 16,
         lineHeight: 24
