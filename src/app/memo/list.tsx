@@ -1,4 +1,5 @@
-import { View, StyleSheet } from 'react-native'
+// FlatListは画面に表示されるリストを制御するもの.
+import { View, StyleSheet, FlatList } from 'react-native'
 // use〇〇というのは、React Hooksであることを意味する.
 // react hooks は、Reactの色々なコンポーネントに機能を与えるもの.
 import { router, useNavigation } from 'expo-router'
@@ -54,16 +55,16 @@ const List = (): JSX.Element => {
             setMemos(remoteMemos)
         })
         return unsubscribe
-    },[])
+    }, [])
 
     return (
         <View style={styles.container}>
             {/* MemoList */}
-            <View>
-                {/* memoItem */}
-                {/* 値を返すだけの時,{}とreturnを省略できる。 */}
-{memos.map((memo) =>  <MemoListItem memo={memo} />)}
-            </View>
+            <FlatList
+                data={memos}
+                // リストのアイテムを表示する関数.{}とreturnは省略可能.
+                renderItem={({ item }) => { return <MemoListItem memo={item} />}}
+            />
             {/* button */}
             <CircleButton onPress={handlePress} >
                 <Icon name='plus' size={40} color='#ffffff' />
