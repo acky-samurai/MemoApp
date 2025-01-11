@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 
 // vector iconsからフェザーライブラリを読み込む.
 // import { Feather } from '@expo/vector-icons'
@@ -11,6 +11,11 @@ router.push('/memo/edit')
 }
 
 const Detail = (): JSX.Element => {
+    // const params = useLocalSearchParams()
+    const { id } = useLocalSearchParams()
+    // paramsにidが入っている.
+    // console.log(params)
+    console.log(id)
     return (
         <View style={styles.container}>
             <View style={styles.memoHeader}>
