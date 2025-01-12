@@ -11,13 +11,13 @@ import CircleButton from '../../compornents/CircleButton'
 import { auth, db } from '../../config'
 import { type Memo } from '../../../types/memo'
 
-const handlePress = (): void => {
-    router.push('/memo/edit')
+const handlePress = (id: string): void => {
+    router.push({ pathname: '/memo/edit', params: { id } })
 }
 
 const Detail = (): JSX.Element => {
     // const params = useLocalSearchParams()
-    const { id } = useLocalSearchParams()
+    const id = String(useLocalSearchParams().id)
     // paramsにidが入っている.
     // console.log(params)
     console.log(id)
@@ -25,7 +25,7 @@ const Detail = (): JSX.Element => {
     const [memo, setMemo] = useState<Memo | null>(null)
     useEffect(() => {
         if (auth.currentUser === null) { return }
-        const ref = doc(db, `users/${auth.currentUser.uid}/memos`, String(id))
+        const ref = doc(db, `users/${auth.currentUser.uid}/memos`, id)
         const unsubscribe = onSnapshot(ref, (memoDoc) => {
             const { bodyText, updatedAt } = memoDoc.data() as Memo
             setMemo({
@@ -50,7 +50,7 @@ const Detail = (): JSX.Element => {
             </ScrollView>
             {/* Button */}
             {/* スタイルとして、top: 160, bottom: 'auto'を受け渡し、indexの設定を上書きする. */}
-            <CircleButton onPress={handlePress} style={{ top: 60, bottom: 'auto' }}>
+            <CircleButton onPress={() => { handlePress(id) }} style={{ top: 60, bottom: 'auto' }}>
                 <Icon name='pencil' size={40} color='#ffffff' />
                 {/* Featherからチェックマークをフォントサイズ40で受け取る. */}
                 {/* <Feather name='check' size={40}/> */}
